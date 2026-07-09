@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lead the Ship — Bilingual Education Platform</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-mark">arina<span>.</span>dev</a>
+    <div class="nav-links">
+      <a href="index.html">← Portfolio</a>
+      <a href="https://github.com/arinaesp/leadtheship" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">lead the ship — bilingual education platform</div>
+    <h1>A 40-page platform, <em>built in four days</em>.</h1>
+    <p class="hero-sub">
+      A bilingual (Russian/English) education platform for young people in Kyrgyzstan and
+      Central Asia — a project-launch program plus a catalog of short courses, built as a
+      full static Astro site: content collections, structured data on every page type,
+      self-hosted subsetted fonts, and a GitHub Actions deploy pipeline. Designed and built
+      solo, end to end.
+    </p>
+    <div class="cta-row">
+      <a href="https://github.com/arinaesp/leadtheship" target="_blank" class="btn btn-primary">View on GitHub →</a>
+      <a href="index.html" class="btn btn-ghost">← Back to portfolio</a>
+    </div>
+    <p style="font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:14px;">
+      Deploy is code-complete; going live is a final GitHub Pages configuration step, not yet public.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">what it is</div>
+    <h2>The platform</h2>
+    <p>
+      Lead the Ship has two pillars: a project-launch program that guides teenagers and young
+      adults through building a real project and using that experience for university
+      applications, and a catalog of short courses and masterclasses — AI, essay writing,
+      English, public speaking, design — taught by young experts, covering skills the school
+      system doesn't. The whole site is bilingual: Russian as the primary language, English
+      as a full parallel track, not a machine-translated afterthought.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">40+</span>
+        <span class="stat-label">Pages, built and verified across both language versions</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2</span>
+        <span class="stat-label">Full languages — Russian primary, English parallel, native copy in both</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">6+</span>
+        <span class="stat-label">Distinct JSON-LD schema types: Course, EducationalEvent, FAQPage, ItemList, LearningResource, Organization</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">engineering</div>
+    <h2>What the build actually required</h2>
+    <p>
+      <strong>Font choices were verified, not assumed.</strong> Two fonts specified early in the
+      design brief — Space Grotesk for display, Instrument Serif as a secondary face — turned
+      out to have zero Cyrillic glyphs when checked directly against their cmap tables with
+      fontTools. Both were dropped and replaced with Cyrillic-native alternatives (Golos Text for
+      display, verified to cover all six Kyrgyz-specific letters as well as standard Cyrillic) —
+      caught before shipping broken Russian headings, not after.
+    </p>
+    <p>
+      <strong>Content is structured for a future backend without needing one yet.</strong> Courses,
+      missions, and resources are built as Astro content collections — markdown/JSON entries
+      rendered at build time — using the exact same page templates and JSON-LD output a
+      database-backed version would use later. Swapping the content source to a CMS or API in a
+      future phase shouldn't require touching a single template.
+    </p>
+    <p>
+      <strong>Built for AI discoverability, not just search engines.</strong> A structured
+      <code>llms.txt</code> at the site root, and a <code>robots.txt</code> that explicitly
+      allows GPTBot, ClaudeBot, and PerplexityBot — plus JSON-LD structured data validated against
+      Google's Rich Results Test on every distinct page type, and custom bilingual 404 handling
+      that accounts for a real GitHub Pages constraint: project sites only ever serve one root
+      <code>404.html</code>, so per-path 404s for the English subpath can never actually trigger
+      and had to be designed around rather than assumed away.
+    </p>
+    <p>
+      <strong>Deploy pipeline built for GitHub Actions, not branch-based Pages.</strong> A custom
+      GitHub Actions workflow builds the Astro site and deploys the Pages artifact directly,
+      avoiding a real Jekyll-processing gotcha that branch-based GitHub Pages deployments hit —
+      documented directly in the workflow file for future reference, not left as tribal knowledge.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">design system</div>
+    <h2>A deliberately anti-generic visual identity</h2>
+    <p>
+      The design brief for this project explicitly ruled out the default AI-generated aesthetic
+      before building anything: no cream-and-terracotta palette, no gradient hero with stock
+      photos, no rounded-corner card grids with drop shadows, no generic "empowering tomorrow's
+      leaders" language. The visual system — a constrained neo-brutalist, zine-meets-launchpad
+      aesthetic with a deep indigo and olive-chartreuse palette, thick charcoal borders, and
+      mono-font "mission control" readouts for stats and metadata — was chosen to earn a specific,
+      concrete reaction: would a 16-year-old in Bishkek actually screenshot this for their story.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">stack</div>
+    <h2>Built with</h2>
+    <p>
+      Astro (static output, i18n for ru/en), content collections for courses, missions, and
+      resources, self-hosted WOFF2 fonts subsetted with fontTools to Latin + Cyrillic + Kyrgyz
+      glyph ranges, <code>@astrojs/sitemap</code>, JSON-LD structured data hand-built per page
+      type, and a GitHub Actions deploy workflow using <code>withastro/action</code> and
+      <code>actions/deploy-pages</code>.
+    </p>
+  </section>
+
+  <footer>
+    <span>Lead the Ship · built by Arina Bolotbekova</span>
+    <a href="index.html">← back to portfolio</a>
+  </footer>
+</div>
+
+</body>
+</html>

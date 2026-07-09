@@ -3,7 +3,7 @@
 /* ============================================
    DESIGN TOKENS
    Portfolio shell = ink + paper + red-pen accent (developer/teacher duality)
-   Axo section = its own established brand (cream/brown/orange)
+   axo section = its own established brand (cream/brown/orange)
    ============================================ */
 :root {
   --ink: #14171C;
@@ -40,6 +40,15 @@ body {
 }
 
 a { color: inherit; }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: rgba(20,23,28,0.06);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.axo-theme code { background: rgba(105,59,55,0.08); }
 
 img { max-width: 100%; display: block; }
 
@@ -175,6 +184,17 @@ img { max-width: 100%; display: block; }
 }
 .card-featured:hover { border-color: var(--axo-orange); }
 .card-featured img { width: 100px; }
+.card-featured-alt {
+  grid-column: 1 / -1;
+  background: var(--paper-raised);
+  border: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 28px;
+}
+.card-featured-alt:hover { border-color: var(--red-pen); }
+.card-featured-alt .card-tag { color: var(--red-pen); }
 .card-tag {
   font-family: var(--mono);
   font-size: 11px;
@@ -218,7 +238,7 @@ footer {
 footer a { text-decoration: none; }
 footer a:hover { color: var(--red-pen); }
 
-/* ---------- AXO PAGE THEME OVERRIDE ---------- */
+/* ---------- axo page theme override ---------- */
 body.axo-theme {
   background: var(--axo-cream);
   color: var(--axo-brown);

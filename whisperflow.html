@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhisperFlow — Local Voice Dictation</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-mark">arina<span>.</span>dev</a>
+    <div class="nav-links">
+      <a href="index.html">← Portfolio</a>
+      <a href="https://github.com/arinaesp/local-whisper-flow" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">whisperflow — local voice dictation</div>
+    <h1>Your voice never <em>leaves your machine</em>.</h1>
+    <p class="hero-sub">
+      An independent, local alternative to Wispr Flow — the popular cloud-based dictation app —
+      built to answer one question: can you get the same push-to-talk dictation experience
+      without sending your voice to a server? Hold a hotkey, speak, release — text appears at
+      your cursor. Transcription runs entirely on-device via faster-whisper; the only network
+      call in the app's lifetime is a one-time model download on first run. Not affiliated with
+      or endorsed by Wispr Flow.
+    </p>
+    <div class="cta-row">
+      <a href="https://github.com/arinaesp/local-whisper-flow" target="_blank" class="btn btn-primary">View on GitHub →</a>
+      <a href="index.html" class="btn btn-ghost">← Back to portfolio</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">why local</div>
+    <h2>Replacing the cloud round-trip</h2>
+    <p>
+      Wispr Flow's own pipeline captures audio locally, but sends it to cloud servers for speech
+      recognition and LLM-based cleanup before typing the result back at the cursor — meaning
+      every dictated word transits their servers and requires a constant connection.
+      WhisperFlow replaces the two cloud-dependent stages with local equivalents: on-device
+      transcription via faster-whisper (CTranslate2, CPU int8), and rule-based cleanup for
+      filler words, spacing, and capitalization instead of an LLM call. The one piece
+      deliberately left out of v1 is per-app tone matching, since that's the one stage that
+      genuinely benefits from an LLM.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Network call in the app's lifetime — the one-time model download</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0</span>
+        <span class="stat-label">Transcripts ever written to disk — audio held in RAM only</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Model sizes supported, tiny → large-v3, tuned for CPU-only machines</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">engineering notes</div>
+    <h2>What building it actually involved</h2>
+    <p>
+      <strong>A shutdown race condition with real teeth.</strong> The first working version
+      transcribed audio in a background thread and injected the result immediately on
+      completion, with no check for whether the app was still running. Quitting mid-transcription
+      could let a background thread finish <em>after</em> the main process had already exited —
+      at which point focus had returned to whatever window was active, often the terminal. The
+      transcribed text would then get typed into that window. If it's a shell, arbitrary
+      dictated speech gets interpreted as commands. Fixed by guarding the hotkey handlers so no
+      new recording starts once shutdown begins, checking a shutdown flag immediately before text
+      injection, and joining all in-flight worker threads before the process exits — so nothing
+      outlives the window it was meant to type into.
+    </p>
+    <p>
+      <strong>Resource sizing, found the hard way.</strong> The larger <code>small</code>
+      Whisper model caused a brief full-system freeze while downloading and loading concurrently
+      over a constrained mobile connection. <code>base</code> runs comfortably faster than
+      real-time on CPU with int8 quantization, and was kept as the practical default —
+      <code>small</code>/<code>medium</code> stay available for machines with more headroom.
+    </p>
+    <p>
+      <strong>A documented security review</strong>, not left implicit: every <code>open()</code>
+      and <code>write()</code> call in the codebase was inspected to confirm transcripts are
+      never logged to disk. The clipboard briefly holds dictated text during paste-mode injection
+      — under a second, before the previous clipboard contents are restored — which is disclosed
+      directly in the README rather than glossed over, along with a plain explanation of why the
+      app needs a system-wide keyboard hook to detect the push-to-talk key regardless of which
+      window has focus.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">stack</div>
+    <h2>Built with</h2>
+    <p>
+      Python, faster-whisper (CTranslate2, CPU int8 quantization) for on-device transcription,
+      the <code>keyboard</code> library for a system-wide push-to-talk hook, and
+      <code>sounddevice</code> for audio capture. Clipboard-paste or simulated-typing for text
+      injection, selectable in config. Structured around four pieces: a <code>Recorder</code>
+      that captures audio while the hotkey is held, a cleanup pass for filler words and
+      formatting, a text-injection step, and a main loop that loads config, loads the model once,
+      and registers the hotkeys.
+    </p>
+  </section>
+
+  <footer>
+    <span>WhisperFlow · built by Arina Bolotbekova</span>
+    <a href="index.html">← back to portfolio</a>
+  </footer>
+</div>
+
+</body>
+</html>
