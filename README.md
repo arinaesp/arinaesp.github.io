@@ -1,6 +1,6 @@
 # arinaesp.github.io
 
-Personal portfolio of **Arina Bolotbekova** — AI Engineer, formerly an IDP-certified IELTS
+Personal portfolio of **Arina Bolotbekova** — full-stack web developer, formerly an IDP-certified IELTS
 instructor and TEFL/TESOL English teacher. Live at **[arinaesp.github.io](https://arinaesp.github.io)**.
 
 ## Projects
