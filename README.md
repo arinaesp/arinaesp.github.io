@@ -38,8 +38,9 @@ the founding thesis behind everything in this portfolio.
 ## Stack
 
 Everything here is static HTML/CSS/JS with no build step, except Lead the Ship (Astro) and
-Tic-Tac-Toe (needs a persistent Node.js/Express/Socket.io server — not deployable to GitHub
-Pages as-is). No frameworks to install for the rest — clone it, open `index.html`, done.
+Tic-Tac-Toe (needs a persistent Node.js/Express/Socket.io server — planned for VPS deployment,
+not hosted on GitHub Pages). No frameworks to install for the rest — clone it, open
+`index.html`, done.
 
 ## Contact
 
