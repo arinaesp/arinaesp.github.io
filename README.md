@@ -22,9 +22,10 @@ An independent, local alternative to Wispr Flow: private, on-device push-to-talk
 dictation for Windows, built on faster-whisper. No cloud calls after the initial model
 download, no disk writes of transcripts, published as v1.0.0.
 
-### Tic-Tac-Toe — [source →](https://github.com/arinaesp/tic-tac-toe-game)
-Real-time multiplayer built on Node.js, Express, and Socket.io, with a full
-security-hardening pass: CORS scoping, rate limiting, room cleanup.
+### [Tic-Tac-Toe](https://arinaesp.github.io/tictactoe.html) — [source →](https://github.com/arinaesp/tic-tac-toe-game)
+Real-time multiplayer over WebSockets, server-authoritative game state (the client only
+renders what it's told), and a custom `security-reviewer` subagent audit before shipping —
+four findings fixed pre-launch, including input validation, rate limiting, and CORS scoping.
 
 ## Background
 
@@ -36,8 +37,9 @@ the founding thesis behind everything in this portfolio.
 
 ## Stack
 
-Everything here is static HTML/CSS/JS with no build step, except Lead the Ship (Astro).
-No frameworks to install, no `npm run dev` — clone it, open `index.html`, done.
+Everything here is static HTML/CSS/JS with no build step, except Lead the Ship (Astro) and
+Tic-Tac-Toe (needs a persistent Node.js/Express/Socket.io server — not deployable to GitHub
+Pages as-is). No frameworks to install for the rest — clone it, open `index.html`, done.
 
 ## Contact
 

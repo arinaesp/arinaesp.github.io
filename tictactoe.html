@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic-Tac-Toe — Real-Time Multiplayer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-mark">arina<span>.</span>dev</a>
+    <div class="nav-links">
+      <a href="index.html">← Portfolio</a>
+      <a href="https://github.com/arinaesp/tic-tac-toe-game" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">tic-tac-toe — real-time multiplayer</div>
+    <h1>Two players, <em>one source of truth</em>.</h1>
+    <p class="hero-sub">
+      A real-time two-player Tic-Tac-Toe game over WebSockets. The server holds all game
+      state — the client only renders what it's told, no game logic runs in the browser.
+      Built with a security-reviewer subagent audit before shipping.
+    </p>
+    <div class="cta-row">
+      <a href="https://github.com/arinaesp/tic-tac-toe-game" target="_blank" class="btn btn-primary">View on GitHub →</a>
+      <a href="index.html" class="btn btn-ghost">← Back to portfolio</a>
+    </div>
+    <p style="font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:14px;">
+      Needs a persistent Node.js server — not deployable to GitHub Pages as-is
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">architecture</div>
+    <h2>Server-authoritative by design</h2>
+    <p>
+      The server maintains all game state. When two players connect and both click Find Game,
+      the server pairs them into a named room and creates a game instance for that pair. Move
+      events travel from client to server via Socket.io; the server validates each move,
+      updates state, and broadcasts the result back to both players in the room — the client
+      never decides whether a move is legal, only the server does.
+    </p>
+    <p>
+      The game engine and matchmaking logic were built as isolated modules with clear
+      interfaces before being wired into the server, making each layer straightforward to
+      reason about independently — and easier to catch the two integration bugs below, since
+      the boundary between "game logic" and "networking" was already clean.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">engineering notes</div>
+    <h2>Two real bugs, caught in integration testing</h2>
+    <p>
+      <strong>Stale game-state bug.</strong> The move handler accepted moves after a game had
+      already ended — winner already decided, or a draw already reached. Fixed by tracking
+      terminal state directly on the game instance and rejecting any move once it's set.
+    </p>
+    <p>
+      <strong>Re-matchmaking race condition.</strong> After a game ended normally, the room was
+      never removed from the active-games map — so the matchmaking queue's duplicate-check
+      logic blocked players from starting a new game after clicking Play Again. Fixed by
+      cleaning up the room immediately after emitting the game-over event.
+    </p>
+    <p>
+      <strong>Room cleanup, more broadly.</strong> Sockets were never explicitly removed from
+      their Socket.io room after a game ended or a player disconnected, so stale room
+      memberships accumulated on the server across games. Fixed with explicit
+      <code>socket.leave()</code> calls in both the game-over path and the disconnect handler,
+      then verified with a two-client test script confirming each socket could pair into a
+      fresh room after both game-over and opponent-disconnect.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">security review</div>
+    <h2>Audited before shipping, not after</h2>
+    <p>
+      A custom Claude Code subagent (<code>security-reviewer</code>, configured in
+      <code>.claude/agents/</code>) audited the codebase before deployment. It flagged five
+      findings; four were actionable and fixed:
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">cellIndex</span>
+        <span class="stat-label">Unvalidated input — added explicit type and bounds checking before any move processes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">rate limit</span>
+        <span class="stat-label">No cooldown on socket events — added a per-connection timer to stop event flooding</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">CORS</span>
+        <span class="stat-label">Open by default — locked to a specific origin in production</span>
+      </div>
+    </div>
+    <p>
+      A fourth fix replaced <code>innerHTML</code> with <code>textContent</code> for rendering
+      server-provided board data, eliminating any XSS risk if that data path ever changes shape.
+      The room-cleanup fix above was itself re-reviewed by the same subagent afterward, which
+      confirmed the cleanup ordering — map deletions before leave calls — was safe with no
+      interleaving window.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">stack</div>
+    <h2>Built with</h2>
+    <p>
+      Node.js, Express for serving the static frontend, Socket.io for real-time bidirectional
+      communication, and vanilla HTML/CSS/JS on the client — no frontend framework, since the
+      client's only job is rendering server-dictated state.
+    </p>
+  </section>
+
+  <footer>
+    <span>Tic-Tac-Toe · built by Arina Bolotbekova</span>
+    <a href="index.html">← back to portfolio</a>
+  </footer>
+</div>
+
+</body>
+</html>
