@@ -27,6 +27,13 @@ Real-time multiplayer over WebSockets, server-authoritative game state (the clie
 renders what it's told), and a custom `security-reviewer` subagent audit before shipping —
 four findings fixed pre-launch, including input validation, rate limiting, and CORS scoping.
 
+## Writing
+
+### [Teaching Kids English Through Code, Not Around It](https://arinaesp.github.io/writing.html)
+A personal essay on why I built axo — the classroom moment that sparked it, the research
+behind Total Physical Response as a teaching method, and an honest look at where the idea
+could still be wrong. First-person, research-backed, illustrated with original charts.
+
 ## Background
 
 Before writing code, I taught English — IELTS Writing and Speaking, TEFL/TESOL certified,
