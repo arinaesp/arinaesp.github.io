@@ -8,8 +8,11 @@ instructor and TEFL/TESOL English teacher. Live at **[arinaesp.github.io](https:
 ### [axo](https://arinaesp.github.io/axo.html) — [live app →](https://arinaesp.github.io/axo/)
 A Telegram Mini App that teaches kids to code — and teaches them to read, write, and speak
 English through the coding commands themselves. Grounded in Total Physical Response (TPR), a
-language-teaching method that pairs instruction with action. Full market research and
-positioning documented on the [research page](https://arinaesp.github.io/axo-research.html).
+language-teaching method that pairs instruction with action. Runs on a Cloudflare Worker
+with a D1 database: server-side verification of Telegram `initData` signatures, group
+membership gating, per-user rate limiting, and secrets that never reach the browser. Full
+market research and positioning documented on the
+[research page](https://arinaesp.github.io/axo-research.html).
 
 ### [Lead the Ship](https://arinaesp.github.io/leadtheship.html)
 A bilingual (Russian/English) education platform for young people in Kyrgyzstan and Central
@@ -23,9 +26,11 @@ dictation for Windows, built on faster-whisper. No cloud calls after the initial
 download, no disk writes of transcripts, published as v1.0.0.
 
 ### [Tic-Tac-Toe](https://arinaesp.github.io/tictactoe.html) — [source →](https://github.com/arinaesp/tic-tac-toe-game)
-Real-time multiplayer over WebSockets, server-authoritative game state (the client only
-renders what it's told), and a custom `security-reviewer` subagent audit before shipping —
-four findings fixed pre-launch, including input validation, rate limiting, and CORS scoping.
+A Node.js/Express/Socket.io backend running real-time multiplayer over WebSockets. Game
+state is server-authoritative — the client only renders what it's told, no game logic runs
+in the browser. Hardened with per-IP connection caps, a bounded matchmaking queue, move
+rate limiting, input validation, and scoped CORS, all after a custom `security-reviewer`
+subagent audit before shipping.
 
 ## Writing
 
@@ -44,9 +49,18 @@ the founding thesis behind everything in this portfolio.
 
 ## Stack
 
-Everything here is static HTML/CSS/JS with no build step, except Lead the Ship (Astro) and
-Tic-Tac-Toe (Node.js/Express/Socket.io server, hosted on GitHub Pages). No frameworks to install for the rest — clone it, open
-`index.html`, done.
+Each project is built on what it actually needs, not on one template:
+
+- **axo** — Cloudflare Worker (edge runtime) + D1 SQLite database. Handles auth, group-membership
+  verification against the Telegram Bot API, rate limiting, and static asset serving from a
+  single Worker. Vanilla JS on the client, which holds no secrets and makes no access decisions.
+- **Lead the Ship** — Astro: content collections, JSON-LD structured data, self-hosted
+  subsetted fonts, GitHub Actions deploy pipeline.
+- **WhisperFlow** — Python on top of faster-whisper, running entirely on-device.
+- **Tic-Tac-Toe** — Node.js + Express + Socket.io backend. Server-authoritative game state
+  over WebSockets, so it needs a persistent Node process — not static hosting.
+- **These portfolio pages** — hand-written HTML/CSS/JS with no build step. Clone, open
+  `index.html`, done.
 
 ## Contact
 

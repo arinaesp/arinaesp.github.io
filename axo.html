@@ -26,7 +26,8 @@
     <p class="hero-sub" style="margin-left:auto; margin-right:auto; text-align:center;">
       A coding game for kids that teaches English reading, writing, and vocabulary
       through the same commands children use to make axo move, jump, and act.
-      Built solo — research, branding, gameplay, and code — by Arina Bolotbekova.
+      Built solo — research, branding, gameplay, and the backend it runs on — by
+      Arina Bolotbekova.
     </p>
     <div class="cta-row" style="justify-content:center;">
       <a href="https://arinaesp.github.io/axo/" target="_blank" class="btn btn-primary">Try the app →</a>
@@ -67,6 +68,61 @@
     <div class="screenshot-frame">
       <img src="assets/axo-screenshot.png" alt="axo start screen">
     </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">architecture</div>
+    <h2 style="color:var(--axo-brown)">A real backend, not a static game</h2>
+    <p>
+      axo runs on a Cloudflare Worker at the edge, backed by a D1 (SQLite) database. One
+      Worker does both jobs: it handles the API routes and falls through to static asset
+      serving for everything else — one deploy, one Worker, no separate API host to keep in
+      sync. Secrets (the Telegram bot token, the group ID, the admin token) live as Worker
+      secrets and never reach the browser.
+    </p>
+    <p>
+      The split matters: everything in <code>js/</code> runs in the child's browser and can
+      be read by anyone, so nothing there is trusted. Every decision that gates access is
+      made server-side in the Worker.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="section-label">auth</div>
+    <h2 style="color:var(--axo-brown)">Verifying a Telegram session end-to-end</h2>
+    <p>
+      A Telegram Mini App hands the client an <code>initData</code> string. Trusting it as-is
+      would mean anyone could forge a user, so the Worker verifies it cryptographically before
+      the app is allowed to boot.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">HMAC</span>
+        <span class="stat-label">SHA-256 signature over the sorted data-check-string, computed with WebCrypto and compared in constant time</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24 hrs</span>
+        <span class="stat-label">Freshness window on <code>auth_date</code> — limits how long a leaked initData string stays useful</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20/min</span>
+        <span class="stat-label">Per-user rate limit, applied after signature checks so nobody can drain a real user's bucket</span>
+      </div>
+    </div>
+    <p>
+      Past the signature, the Worker asks the Telegram Bot API whether the user is actually in
+      the axo group. That call <strong>never fails open</strong> — if Telegram is unreachable
+      the response is "verification unavailable," not "welcome in." Every rejection logs a
+      one-word reason code for ops, while the client only ever sees a generic error, so failed
+      attempts learn nothing about which check they tripped.
+    </p>
+    <p>
+      One deliberate exception to the strictness: if the database write recording a verified
+      user fails, the request still succeeds. Auth was already proven at that point, and a
+      storage hiccup shouldn't lock a paying family out of the app. The diagnostics endpoint
+      follows the same defensive default in the other direction — it reports itself disabled
+      until an admin token is configured, rather than sitting open.
+    </p>
   </section>
 
   <section class="section">

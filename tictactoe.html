@@ -21,16 +21,17 @@
     <div class="eyebrow">tic-tac-toe — real-time multiplayer</div>
     <h1>Two players, <em>one source of truth</em>.</h1>
     <p class="hero-sub">
-      A real-time two-player Tic-Tac-Toe game over WebSockets. The server holds all game
-      state — the client only renders what it's told, no game logic runs in the browser.
-      Built with a security-reviewer subagent audit before shipping.
+      A Node.js/Express/Socket.io backend running real-time two-player Tic-Tac-Toe over
+      WebSockets. The server holds all game state — the client only renders what it's told,
+      no game logic runs in the browser. Hardened against abuse and audited by a
+      security-reviewer subagent before shipping.
     </p>
     <div class="cta-row">
       <a href="https://github.com/arinaesp/tic-tac-toe-game" target="_blank" class="btn btn-primary">View on GitHub →</a>
       <a href="index.html" class="btn btn-ghost">← Back to portfolio</a>
     </div>
     <p style="font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-top:14px;">
-      Needs a persistent Node.js server — deploying to a VPS
+      Runs as a persistent Node.js process — a real server, not static hosting
     </p>
   </section>
 
@@ -80,9 +81,8 @@
     <div class="section-label">security review</div>
     <h2>Audited before shipping, not after</h2>
     <p>
-      A custom Claude Code subagent (<code>security-reviewer</code>, configured in
-      <code>.claude/agents/</code>) audited the codebase before deployment. It flagged five
-      findings; four were actionable and fixed:
+      A custom Claude Code subagent (<code>security-reviewer</code>) audited the codebase
+      before deployment. It flagged five findings; four were actionable and fixed:
     </p>
     <div class="stats">
       <div class="stat">
@@ -91,7 +91,7 @@
       </div>
       <div class="stat">
         <span class="stat-num">rate limit</span>
-        <span class="stat-label">No cooldown on socket events — added a per-connection timer to stop event flooding</span>
+        <span class="stat-label">No cooldown on socket events — added a per-connection timer that rejects moves under 300ms apart</span>
       </div>
       <div class="stat">
         <span class="stat-num">CORS</span>
@@ -108,12 +108,43 @@
   </section>
 
   <section class="section">
+    <div class="section-label">hardening</div>
+    <h2>Bounding every resource a client can grow</h2>
+    <p>
+      The audit fixed what was already written. A later pass went after the parts of the
+      server a single client could grow without limit — each one now has a ceiling, and each
+      ceiling is configurable by environment variable rather than hardcoded.
+    </p>
+    <p>
+      <strong>Per-IP connection cap.</strong> Socket.io middleware counts live connections per
+      resolved IP and rejects new ones past <code>CONNECTIONS_PER_IP</code> (default 10).
+      Behind a proxy, setting <code>TRUST_PROXY</code> makes it read the real client IP from
+      <code>X-Forwarded-For</code> instead of the proxy's own address. The decrement is bound
+      to the socket's own disconnect event, so a connection can't leak its slot.
+    </p>
+    <p>
+      <strong>Bounded matchmaking queue.</strong> The waiting queue is capped at
+      <code>MAX_QUEUE_SIZE</code> (default 100). Past that, the server emits
+      <code>queue-full</code> rather than growing the array — the client is told why it wasn't
+      queued instead of waiting on a pairing that isn't coming.
+    </p>
+    <p>
+      <strong>Feedback on rejection.</strong> The rate limiter used to drop fast moves
+      silently, which reads as a broken board. It now emits <code>move-rejected</code> so the
+      client can distinguish "too fast" from "nothing happened." Both limit values are
+      validated at startup and the process refuses to boot on a non-positive or malformed
+      value — a typo fails loudly instead of silently disabling the cap.
+    </p>
+  </section>
+
+  <section class="section">
     <div class="section-label">stack</div>
     <h2>Built with</h2>
     <p>
-      Node.js, Express for serving the static frontend, Socket.io for real-time bidirectional
-      communication, and vanilla HTML/CSS/JS on the client — no frontend framework, since the
-      client's only job is rendering server-dictated state.
+      Node.js and Express on the server, Socket.io for real-time bidirectional communication,
+      and vanilla HTML/CSS/JS on the client — no frontend framework, since the client's only
+      job is rendering server-dictated state. No database: games live in memory for their
+      lifetime and are cleaned up on game-over or disconnect.
     </p>
   </section>
 
