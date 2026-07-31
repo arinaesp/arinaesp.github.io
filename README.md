@@ -5,7 +5,7 @@ instructor and TEFL/TESOL English teacher. Live at **[arinaesp.github.io](https:
 
 ## Projects
 
-### [axo](https://arinaesp.github.io/axo.html) — [live app →](https://arinaesp.github.io/axo/)
+### [axo](https://arinaesp.github.io/axo.html) — [live app →](https://axo.axocoder.workers.dev/)
 A Telegram Mini App that teaches kids to code — and teaches them to read, write, and speak
 English through the coding commands themselves. Grounded in Total Physical Response (TPR), a
 language-teaching method that pairs instruction with action. Runs on a Cloudflare Worker
