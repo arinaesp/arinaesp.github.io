@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ILLA Methodology — Arina Bolotbekova</title>
+<meta name="description" content="Integrated Language-Logic Acquisition (ILLA): a dual-literacy framework teaching English and computational thinking simultaneously to children ages 5–9 with zero prior language knowledge.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ── Page-scoped styles for methodology.html ─────────────────────────
+     Reuses portfolio classes (.wrap, .nav, .section, .section-label…)
+     and adds ILLA-specific components, all prefixed .illa- to avoid
+     collisions with styles.css. Accent inherits --red-pen. */
+
+  .illa-hero { padding: 3.5rem 0 2.5rem; }
+  .illa-hero h1 { margin: 0.4rem 0 0.8rem; }
+  .illa-hero .illa-sub { max-width: 42rem; opacity: 0.85; line-height: 1.6; }
+
+  .illa-meta {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    margin-top: 1.4rem; font-size: 0.85rem; opacity: 0.75;
+  }
+  .illa-meta strong { font-weight: 600; opacity: 1; }
+
+  .illa-premise {
+    border-left: 3px solid var(--red-pen, #c0392b);
+    padding: 0.9rem 1.2rem; margin: 1.6rem 0;
+    background: rgba(0,0,0,0.03); border-radius: 0 8px 8px 0;
+    font-size: 1.05rem; line-height: 1.6;
+  }
+
+  /* Pillars — theoretical foundations */
+  .illa-pillars {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem; margin-top: 1.4rem;
+  }
+  .illa-pillar {
+    border: 1px solid rgba(0,0,0,0.12); border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+  .illa-pillar h4 { margin: 0 0 0.45rem; font-size: 1rem; }
+  .illa-pillar .illa-attrib { font-size: 0.78rem; opacity: 0.65; display: block; margin-bottom: 0.5rem; }
+  .illa-pillar p { margin: 0; font-size: 0.9rem; line-height: 1.55; }
+
+  /* Dual-phase engine */
+  .illa-phase {
+    border: 1px solid rgba(0,0,0,0.12); border-radius: 10px;
+    padding: 1.2rem 1.4rem; margin-top: 1.1rem;
+  }
+  .illa-phase-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red-pen, #c0392b); font-weight: 700;
+  }
+  .illa-phase h3 { margin: 0.25rem 0 0.9rem; }
+  .illa-steps { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: stretch; }
+  .illa-step {
+    flex: 1 1 160px; background: rgba(0,0,0,0.035); border-radius: 8px;
+    padding: 0.8rem 0.9rem; font-size: 0.88rem; line-height: 1.5;
+  }
+  .illa-step b { display: block; margin-bottom: 0.2rem; }
+  .illa-arrow-down {
+    text-align: center; font-size: 1.3rem; margin: 0.4rem 0;
+    color: var(--red-pen, #c0392b);
+  }
+
+  /* Tables */
+  .illa-table-wrap { overflow-x: auto; margin-top: 1.3rem; }
+  table.illa-table {
+    border-collapse: collapse; width: 100%; font-size: 0.88rem; min-width: 640px;
+  }
+  .illa-table th {
+    text-align: left; padding: 0.6rem 0.8rem;
+    border-bottom: 2px solid var(--red-pen, #c0392b);
+    font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .illa-table td {
+    padding: 0.65rem 0.8rem; border-bottom: 1px solid rgba(0,0,0,0.1);
+    vertical-align: top; line-height: 1.5;
+  }
+  .illa-table code {
+    background: rgba(0,0,0,0.05); padding: 0.1rem 0.35rem; border-radius: 4px;
+    font-size: 0.82rem; white-space: nowrap;
+  }
+
+  /* Code blocks */
+  pre.illa-code {
+    background: #1e1e1e; color: #eaeaea; border-radius: 10px;
+    padding: 1rem 1.2rem; overflow-x: auto; font-size: 0.88rem; line-height: 1.6;
+    margin: 1rem 0;
+  }
+  pre.illa-code .kw { color: #e8a87c; }
+
+  /* Case study */
+  .illa-findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 1.3rem; }
+  .illa-finding {
+    border-top: 3px solid var(--red-pen, #c0392b);
+    background: rgba(0,0,0,0.03); border-radius: 0 0 10px 10px;
+    padding: 1rem 1.1rem;
+  }
+  .illa-finding h4 { margin: 0 0 0.4rem; font-size: 0.95rem; }
+  .illa-finding p { margin: 0; font-size: 0.88rem; line-height: 1.55; }
+
+  .illa-quote {
+    font-size: 1.15rem; line-height: 1.6; margin: 1.6rem 0;
+    padding-left: 1.2rem; border-left: 3px solid var(--red-pen, #c0392b);
+    font-style: italic; opacity: 0.9;
+  }
+
+  /* Paper / roadmap callout */
+  .illa-paper {
+    border: 1px dashed rgba(0,0,0,0.25); border-radius: 10px;
+    padding: 1.3rem 1.5rem; margin-top: 1.4rem;
+  }
+  .illa-paper h4 { margin: 0 0 0.5rem; }
+  .illa-paper em { display: block; margin: 0.4rem 0 0.8rem; font-size: 1rem; }
+
+  .illa-toc {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;
+  }
+  .illa-toc a {
+    font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.18); text-decoration: none; color: inherit;
+  }
+  .illa-toc a:hover { border-color: var(--red-pen, #c0392b); color: var(--red-pen, #c0392b); }
+
+  @media (max-width: 600px) {
+    .illa-steps { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-mark">arina<span>.</span>dev</a>
+    <div class="nav-links">
+      <a href="leadtheship.html">Lead the Ship</a>
+      <a href="axo.html">axo</a>
+      <a href="writing.html">writing</a>
+      <a href="methodology.html">research</a>
+      <a href="https://github.com/arinaesp" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <section class="illa-hero">
+    <div class="eyebrow">research &amp; methodology</div>
+    <h1>Integrated Language-Logic Acquisition <em>(ILLA)</em></h1>
+    <p class="illa-sub">
+      A dual-literacy framework for simultaneous second-language acquisition and
+      computational thinking in children ages 5–9 — including learners with zero
+      prior knowledge of English or the Latin alphabet.
+    </p>
+    <div class="illa-meta">
+      <span><strong>Author:</strong> Arina Bolotbekova</span>
+      <span><strong>Domain:</strong> EdTech · SLA · Computational Thinking</span>
+      <span><strong>Implementation:</strong> <a href="axo.html" style="color:var(--red-pen)">axo</a>, a Telegram Mini App</span>
+    </div>
+    <div class="illa-toc">
+      <a href="#premise">Premise</a>
+      <a href="#foundations">Theoretical foundations</a>
+      <a href="#engine">Dual-phase engine</a>
+      <a href="#curriculum">40-lesson roadmap</a>
+      <a href="#conditionals">Advanced conditionals</a>
+      <a href="#case-study">Case study</a>
+      <a href="#comparison">Comparative matrix</a>
+      <a href="#roadmap">Research roadmap</a>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Premise ───────────────────────── -->
+  <section class="section" id="premise">
+    <div class="section-label">the paradigm shift</div>
+    <h2>Why language and logic belong in one lesson</h2>
+    <p>
+      Traditional early-childhood EdTech treats Second Language Acquisition (SLA) and
+      Computational Thinking (CT) as separate silos. Standard ESL apps (Duolingo,
+      Lingokids) rely on passive visual matching, translation, and rote flashcard
+      repetition — they never engage procedural logic or spatial problem-solving.
+      Standard coding apps (Lightbot, Scratch, CodeMonkey) teach algorithmic logic
+      but assume native English literacy, treating text commands as abstract syntax
+      rather than natural language to be acquired through phonics decoding.
+    </p>
+    <p>ILLA bridges this gap. It operates on a single core innovation:</p>
+    <div class="illa-premise">
+      For a non-English-speaking child with zero prior language knowledge, target
+      English vocabulary functions natively as an <strong>executable programming
+      language</strong>.
+    </div>
+    <p>
+      By treating English words (<code>go</code>, <code>turn-left</code>,
+      <code>loop</code>, <code>if-ice</code>, <code>else</code>) as direct action
+      triggers inside a goal-oriented grid environment, ILLA enables young learners
+      to simultaneously acquire three capacities:
+    </p>
+    <div class="illa-findings">
+      <div class="illa-finding">
+        <h4>Phonemic reading literacy</h4>
+        <p>Letter–sound associations built through interactive audio-typing, one
+        keystroke and one phoneme at a time.</p>
+      </div>
+      <div class="illa-finding">
+        <h4>Active spoken English</h4>
+        <p>Imperative verbs and spatial structures used as functional tools of
+        agency, not vocabulary items to memorize.</p>
+      </div>
+      <div class="illa-finding">
+        <h4>Computational thinking</h4>
+        <p>Algorithmic planning, spatial logic, loops, and conditional branching
+        (<code>if</code> / <code>elif</code> / <code>else</code>).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Foundations ───────────────────────── -->
+  <section class="section" id="foundations">
+    <div class="section-label">theoretical foundations</div>
+    <h2>Four frameworks, one synthesis</h2>
+    <p>
+      ILLA is built on a synthesis of four established frameworks from cognitive
+      science, linguistics, and computer science education.
+    </p>
+    <div class="illa-pillars">
+      <div class="illa-pillar">
+        <h4>Task-Based Language Teaching</h4>
+        <span class="illa-attrib">Prabhu 1987 · Willis 1996 · Ellis 2003 · Nunan 2004</span>
+        <p>Language is acquired best when used as a tool to achieve a non-linguistic
+        outcome. ILLA automates the TBLT cycle digitally: the learner evaluates a
+        grid map to reach a goal (the reasoning gap), and focuses on solving the
+        puzzle rather than memorizing rules — syntax is acquired implicitly.</p>
+      </div>
+      <div class="illa-pillar">
+        <h4>Multisensory Synthetic Phonics</h4>
+        <span class="illa-attrib">Systematic phonics principles, e.g. Jolly Phonics</span>
+        <p>Auditory phonemes (/g/, /o/) are paired with visual graphemes (G, O) and
+        kinesthetic typing actions. The brain constructs a multi-layered neural map
+        linking letter-sound, visual spelling, and motor execution.</p>
+      </div>
+      <div class="illa-pillar">
+        <h4>Digitized TPR &amp; Body-Syntonicity</h4>
+        <span class="illa-attrib">Asher's Total Physical Response · Papert's LOGO Turtle</span>
+        <p>Typing <code>turn-left</code> or <code>go</code> causes an immediate,
+        visible movement of the on-screen agent. The learner projects their own body
+        schema into the spatial grid — language linked directly to physical action.</p>
+      </div>
+      <div class="illa-pillar">
+        <h4>Coding as Another Language</h4>
+        <span class="illa-attrib">Dr. Marina Umaschi Bers, 2018–2019</span>
+        <p>Constructing code relies on the same cognitive networks used for natural
+        language literacy: [Subject] → [Verb] → [Object] maps onto
+        [Condition] → [Command] → [Execution].</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Engine ───────────────────────── -->
+  <section class="section" id="engine">
+    <div class="section-label">structural engine</div>
+    <h2>The dual-phase cognitive cycle</h2>
+    <p>
+      Every ILLA lesson follows a strictly structured two-phase pipeline, taking
+      zero-knowledge learners from raw sensory perception to active algorithmic
+      execution.
+    </p>
+
+    <div class="illa-phase">
+      <span class="illa-phase-label">Phase 1 · Learn</span>
+      <h3>Phonemic-kinesthetic input &amp; decoding</h3>
+      <div class="illa-steps">
+        <div class="illa-step"><b>1 · Audio-visual pairing</b>
+          The child sees the target command (<code>go</code>) and hears its native
+          pronunciation.</div>
+        <div class="illa-step"><b>2 · Letter-by-letter tapping</b>
+          Each keystroke plays the isolated phonetic letter-sound: G → /g/,
+          O → /o/. Visual, auditory, and kinesthetic inputs merge.</div>
+        <div class="illa-step"><b>3 · Word synthesis</b>
+          Completing the keystrokes replays the full morpheme audio, solidifying
+          the phoneme-to-grapheme bridge.</div>
+      </div>
+    </div>
+
+    <div class="illa-arrow-down">↓</div>
+
+    <div class="illa-phase">
+      <span class="illa-phase-label">Phase 2 · Challenge</span>
+      <h3>Goal-driven spatial &amp; algorithmic execution</h3>
+      <div class="illa-steps">
+        <div class="illa-step"><b>1 · Evaluate the grid</b>
+          The child identifies a sprite, terrain elements, and an objective — a
+          mouse that needs to reach a gift.</div>
+        <div class="illa-step"><b>2 · Construct the sequence</b>
+          The child assembles a deterministic command sequence:
+          <code>go</code>, <code>turn-left</code>, <code>go</code>.</div>
+        <div class="illa-step"><b>3 · Immediate state change</b>
+          Hitting <b>GO!</b> executes the code in real time. An incorrect sequence
+          moves the sprite exactly as written — non-punitive, visual debugging
+          instead of lost hearts.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Curriculum ───────────────────────── -->
+  <section class="section" id="curriculum">
+    <div class="section-label">curriculum</div>
+    <h2>The 40-lesson algorithmic roadmap</h2>
+    <p>
+      Forty systematically scaffolded lessons progress learners from single atomic
+      commands to multi-branch conditional control structures — each module pairing
+      an ESL focus with a computational one.
+    </p>
+    <div class="illa-table-wrap">
+      <table class="illa-table">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Lessons</th>
+            <th>Linguistic focus (ESL)</th>
+            <th>Computational focus (CT)</th>
+            <th>Target syntax</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1 · Atomic Action Commands</strong></td>
+            <td>1–5</td>
+            <td>Directional &amp; imperative verbs</td>
+            <td>Single-step execution &amp; state mapping</td>
+            <td><code>go</code> <code>stop</code> <code>run</code> <code>back</code></td>
+          </tr>
+          <tr>
+            <td><strong>2 · Spatial Orientation &amp; Sequencing</strong></td>
+            <td>6–10</td>
+            <td>Relative directions &amp; sequential adverbs</td>
+            <td>Spatial vectoring &amp; multi-step planning</td>
+            <td><code>turn-left</code> <code>turn-right</code> <code>move 2</code></td>
+          </tr>
+          <tr>
+            <td><strong>3 · Parameterization &amp; Quantifiers</strong></td>
+            <td>11–17</td>
+            <td>Cardinal numbers, plurals &amp; noun modifiers</td>
+            <td>Variable parameters &amp; direct inputs</td>
+            <td><code>go 3</code> <code>step 4</code> <code>jump 2</code></td>
+          </tr>
+          <tr>
+            <td><strong>4 · Procedural Repetition &amp; Loops</strong></td>
+            <td>18–25</td>
+            <td>Repetitive structures &amp; duration</td>
+            <td>Bounded iteration &amp; loop blocks</td>
+            <td><code>loop 3 [go]</code> <code>loop 2 [go, turn-left]</code></td>
+          </tr>
+          <tr>
+            <td><strong>5 · Single-Branch Conditionals</strong></td>
+            <td>26–33</td>
+            <td>Conditional grammar (if… then… else)</td>
+            <td>Boolean state evaluation &amp; branching</td>
+            <td><code>if-path … end</code> <code>if-X … else … end</code></td>
+          </tr>
+          <tr>
+            <td><strong>6 · Multi-Branch Environmental Chains</strong></td>
+            <td>34–40</td>
+            <td>Complex hypotheses &amp; environmental vocabulary</td>
+            <td>Chained conditionals &amp; dynamic state control</td>
+            <td><code>if-ice</code> <code>if-fog</code> <code>elif</code> <code>else</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Conditionals ───────────────────────── -->
+  <section class="section" id="conditionals">
+    <div class="section-label">modules 5 &amp; 6 in depth</div>
+    <h2>Teaching conditionals without a grammar book</h2>
+
+    <h3>Single-branch conditional with fallback</h3>
+    <p>
+      <strong>Linguistic objective:</strong> internalize natural English conditional
+      fallback logic — "if [condition] happens, do A; otherwise, do B."<br>
+      <strong>Computational objective:</strong> introduce binary decision trees and
+      fallback execution paths.
+    </p>
+    <pre class="illa-code"><span class="kw">if-wall</span>
+    turn-left
+<span class="kw">else</span>
+    go
+<span class="kw">end</span></pre>
+    <p>
+      The child grasps <code>else</code> as a physical safety net for the agent —
+      abstract grammar instruction for conditional clauses is eliminated entirely.
+    </p>
+
+    <h3>Multi-branch environmental chains</h3>
+    <p>
+      <strong>Linguistic objective:</strong> expand descriptive environmental
+      vocabulary (<em>ice, fog, hill</em>) embedded directly in multi-clause
+      conditional structures.<br>
+      <strong>Computational objective:</strong> master multi-state evaluation and
+      complex control flow (if → elif → else).
+    </p>
+    <pre class="illa-code"><span class="kw">if-ice</span>
+    slide
+<span class="kw">elif-hill</span>
+    climb
+<span class="kw">elif-fog</span>
+    wait
+<span class="kw">else</span>
+    go
+<span class="kw">end</span></pre>
+    <p>
+      The child develops an intuitive grasp of priority ordering in logic execution
+      while absorbing high-level English sentence structures — syntax as an action
+      trigger, not a rule to recite.
+    </p>
+  </section>
+
+  <!-- ───────────────────────── Case study ───────────────────────── -->
+  <section class="section" id="case-study">
+    <div class="section-label">empirical case study</div>
+    <h2>Spontaneous transfer in a 6-year-old learner</h2>
+    <p>
+      During early validation of the ILLA prototype with a 6-year-old child who had
+      zero prior knowledge of English or the alphabet, a single 30-minute session
+      produced three observable outcomes:
+    </p>
+    <div class="illa-findings">
+      <div class="illa-finding">
+        <h4>Rapid literacy decoding</h4>
+        <p>Within 30 minutes, the child could independently type, decode, and read
+        functional directional commands (<code>go</code>, <code>turn-left</code>).</p>
+      </div>
+      <div class="illa-finding">
+        <h4>Spontaneous spoken production</h4>
+        <p>The child vocalized the target words out loud during execution — unprompted
+        active production, not passive recognition.</p>
+      </div>
+      <div class="illa-finding">
+        <h4>Cross-contextual pragmatic transfer</h4>
+        <p>Shortly after the session, in a public market, the child spontaneously
+        substituted his native Russian ("иди направо") with the English acquired
+        in-game — telling his brother <em>"turn left!"</em> and playfully adding
+        <em>"move move!"</em> to passersby.</p>
+      </div>
+    </div>
+    <p class="illa-quote">
+      English is the programming language.
+    </p>
+    <p>
+      <strong>Significance for SLA research:</strong> this transfer demonstrates that
+      ILLA achieves natural language acquisition rather than passive memorization.
+      The target words were stored in the child's mind as active physical commands —
+      functional instruments of agency.
+    </p>
+  </section>
+
+  <!-- ───────────────────────── Comparison ───────────────────────── -->
+  <section class="section" id="comparison">
+    <div class="section-label">positioning</div>
+    <h2>Comparative methodology matrix</h2>
+    <div class="illa-table-wrap">
+      <table class="illa-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>Traditional ESL apps<br><span style="font-weight:400;text-transform:none">(e.g. Duolingo)</span></th>
+            <th>Traditional coding apps<br><span style="font-weight:400;text-transform:none">(e.g. Lightbot)</span></th>
+            <th>ILLA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Assumed prior knowledge</strong></td>
+            <td>Native L1 literacy</td>
+            <td>Native English literacy</td>
+            <td>None — zero L1/L2 or alphabet knowledge required</td>
+          </tr>
+          <tr>
+            <td><strong>Role of English</strong></td>
+            <td>Subject memorized via translation</td>
+            <td>Pure syntax for code execution</td>
+            <td>Executable programming language <em>and</em> communication tool</td>
+          </tr>
+          <tr>
+            <td><strong>Phonics integration</strong></td>
+            <td>Secondary or disconnected</td>
+            <td>Non-existent</td>
+            <td>Integrated multisensory synthetic phonics (audio / key / phoneme)</td>
+          </tr>
+          <tr>
+            <td><strong>Cognitive framework</strong></td>
+            <td>Rote memorization &amp; item matching</td>
+            <td>Pure computational thinking</td>
+            <td>Dual literacy — SLA + CT simultaneously</td>
+          </tr>
+          <tr>
+            <td><strong>Error handling</strong></td>
+            <td>Punitive score reduction, losing hearts</td>
+            <td>Static execution failure</td>
+            <td>Non-punitive visual debugging via sprite state change</td>
+          </tr>
+          <tr>
+            <td><strong>Curriculum depth</strong></td>
+            <td>Noun/verb categories</td>
+            <td>Basic loop/function blocks</td>
+            <td>40 lessons, atomic commands → <code>elif</code> &amp; environmental state chains</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Roadmap ───────────────────────── -->
+  <section class="section" id="roadmap">
+    <div class="section-label">what's next</div>
+    <h2>Research &amp; peer-review roadmap</h2>
+    <div class="illa-paper">
+      <h4>Formal research paper in progress</h4>
+      <em>"Integrated Language-Logic Acquisition (ILLA): Evaluating Dual-Literacy
+      Emergence in Early Childhood Through Command-Driven Game Engines."</em>
+      <p>
+        Alongside the paper, the ILLA engine continues to ship in production as
+        <a href="axo.html" style="color:var(--red-pen)">axo</a> — a Telegram Mini App
+        implementing the Learn/Challenge cycle, phonemic keyboard, and grid engine
+        described above. The product research behind axo is documented on the
+        <a href="axo-research.html" style="color:var(--red-pen)">axo research page</a>.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Arina Bolotbekova</span>
+    <a href="https://github.com/arinaesp" target="_blank">github.com/arinaesp</a>
+  </footer>
+</div>
+
+</body>
+</html>
