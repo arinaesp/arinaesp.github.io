@@ -235,7 +235,7 @@
       </span>
     </a>
 
-    <a class="row" href="https://t.me/axo_lab">
+    <a class="row channel-link" href="https://t.me/axo_lab">
       <span class="row-icon" aria-hidden="true">💬</span>
       <span class="row-text">
         <span class="row-title" data-i18n="groupT">AXO Lab в Telegram</span>
@@ -332,8 +332,8 @@
       grpStart: 'Start here',
       accessT: 'Get access',
       accessD: 'Message @axo_manager, who hands out the code for the game',
-      groupT: 'AXO Lab on Telegram',
-      groupD: 'Links to the free demo, the instructions and answers to questions',
+      groupT: 'AXO Global on Telegram',
+      groupD: 'Our English channel: the free demo, the instructions and answers to questions',
       grpAbout: 'About the game',
       howT: 'How to play',
       howD: 'Five screens of the game, with every button explained',
@@ -362,6 +362,14 @@
     document.querySelectorAll('[data-i18n-alt]').forEach(el => {
       el.alt = dict[el.dataset.i18nAlt];
     });
+    // The community splits by language: Russian readers go to AXO Lab,
+    // everyone else to AXO GLOBAL. Without this an English-speaking parent
+    // lands in a Russian-language channel, which is the exact thing the
+    // global channel was created to avoid.
+    document.querySelectorAll('.channel-link').forEach(a => {
+      a.href = lang === 'ru' ? 'https://t.me/axo_lab' : 'https://t.me/axoglobal';
+    });
+
     document.querySelector('.lang-toggle').dataset.active = lang;
     document.querySelectorAll('[data-lang-btn]').forEach(btn => {
       const active = btn.dataset.langBtn === lang;
