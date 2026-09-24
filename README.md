@@ -1,28 +1,23 @@
 # arinaesp.github.io
 
-Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the ILLA methodology,
+Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the CT-DGBLL framework (formerly ILLA),
 former TEFL/TESOL and IDP-certified instructor. Live at **[arinaesp.github.io](https://arinaesp.github.io)**.
 
 ## Research & Methodology
 
-### [Integrated Language-Logic Acquisition (ILLA)](https://arinaesp.github.io/methodology.html)
+### [CT-DGBLL (formerly ILLA)](https://arinaesp.github.io/methodology.html)
 
-An original dual-literacy framework I'm developing for children ages 5–9 with zero prior
-knowledge of English or the alphabet. Core premise: for a non-English-speaking child, target
-English vocabulary functions natively as an executable programming language — words like
-`go`, `turn-left`, and `if-ice` are acquired as action triggers, not memorized as flashcards.
-ILLA synthesizes Task-Based Language Teaching, multisensory synthetic phonics, digitized
-Total Physical Response, and Coding-as-Another-Language into a two-phase Learn/Challenge
-engine, scaffolded across a 40-lesson curriculum from atomic commands to `if`/`elif`/`else`
-chains. Includes an empirical case study of spontaneous cross-contextual language transfer
-after a single 30-minute session. A formal research paper is in progress; **axo** (below)
-is the framework's production implementation.
+ILLA was the 2026 working name of the framework now called CT-DGBLL (Computational
+Thinking Digital Game-Based Language Learning): early English literacy and computational
+thinking, learned at the same time through commands that are English words and program
+instructions at once. Two conceptual papers are in preparation; **axo** (below) is the
+app that implements the framework.
 
 ## Projects
 
 ### [axo](https://arinaesp.github.io/axo.html) — [live app →](https://axo.axocoder.workers.dev/)
 
-A Telegram Mini App built on **ILLA** (above) — the methodology I developed fusing early coding logic with
+A Telegram Mini App built on **CT-DGBLL** (above) — the methodology I developed fusing early coding logic with
 English language acquisition into a single learning loop, an approach with no found precedent
 in the products surveyed. axo works as an interactive bridge into English literacy for children,
 complementing rather than replacing formal instruction: kids see a word, type the code command,
