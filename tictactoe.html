@@ -20,6 +20,7 @@
   <section class="hero">
     <div class="eyebrow">tic-tac-toe — real-time multiplayer</div>
     <h1>Two players, <em>one source of truth</em>.</h1>
+    <p class="pub-date"><time datetime="2026-07-09">9 July 2026</time></p>
     <p class="hero-sub">
       A Node.js/Express/Socket.io backend running real-time two-player Tic-Tac-Toe over
       WebSockets. The server holds all game state — the client only renders what it's told,
@@ -38,6 +39,7 @@
   <section class="section">
     <div class="section-label">architecture</div>
     <h2>Server-authoritative by design</h2>
+    <p class="pub-date"><time datetime="2026-07-09">9 July 2026</time></p>
     <p>
       The server maintains all game state. When two players connect and both click Find Game,
       the server pairs them into a named room and creates a game instance for that pair. Move
@@ -56,6 +58,7 @@
   <section class="section">
     <div class="section-label">engineering notes</div>
     <h2>Two real bugs, caught in integration testing</h2>
+    <p class="pub-date"><time datetime="2026-07-09">9 July 2026</time></p>
     <p>
       <strong>Stale game-state bug.</strong> The move handler accepted moves after a game had
       already ended — winner already decided, or a draw already reached. Fixed by tracking
@@ -80,6 +83,7 @@
   <section class="section">
     <div class="section-label">security review</div>
     <h2>Audited before shipping, not after</h2>
+    <p class="pub-date"><time datetime="2026-07-09">9 July 2026</time></p>
     <p>
       A custom Claude Code subagent (<code>security-reviewer</code>) audited the codebase
       before deployment. It flagged five findings; four were actionable and fixed:
@@ -110,6 +114,7 @@
   <section class="section">
     <div class="section-label">hardening</div>
     <h2>Bounding every resource a client can grow</h2>
+    <p class="pub-date"><time datetime="2026-07-31">31 July 2026</time></p>
     <p>
       The audit fixed what was already written. A later pass went after the parts of the
       server a single client could grow without limit — each one now has a ceiling, and each
@@ -140,6 +145,7 @@
   <section class="section">
     <div class="section-label">stack</div>
     <h2>Built with</h2>
+    <p class="pub-date"><time datetime="2026-07-09">9 July 2026</time></p>
     <p>
       Node.js and Express on the server, Socket.io for real-time bidirectional communication,
       and vanilla HTML/CSS/JS on the client — no frontend framework, since the client's only
