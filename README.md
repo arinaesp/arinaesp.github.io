@@ -15,17 +15,18 @@ app that implements the framework.
 
 ## Projects
 
-### [axo](https://arinaesp.github.io/axo.html) — [live app →](https://axo.axocoder.workers.dev/)
+### [axo](https://arinaesp.github.io/axo.html) — [play in browser →](https://play.axolab.space) · [Telegram →](https://t.me/axocoder_bot) · [site →](https://axolab.space)
 
-A Telegram Mini App built on **CT-DGBLL** (above) — the methodology I developed fusing early coding logic with
+A free game, in Telegram and in the browser, built on **CT-DGBLL** (above) — the methodology I developed fusing early coding logic with
 English language acquisition into a single learning loop, an approach with no found precedent
 in the products surveyed. axo works as an interactive bridge into English literacy for children,
 complementing rather than replacing formal instruction: kids see a word, type the code command,
 hear it spoken, and watch axo act it out. Grounded in Total Physical Response (TPR), a
 language-teaching principle developed by James Asher that pairs instruction with physical
 action. Runs on a Cloudflare Worker with a D1 database: server-side verification of Telegram
-`initData` signatures, group membership gating, per-user rate limiting, and secrets that never
-reach the browser. Full market research and positioning documented on the
+`initData` signatures, per-user rate limiting, anonymous usage totals with no IDs, and secrets
+that never reach the browser. A paid access-code system is built and switched off by one
+config flag while axo is free. Full market research and positioning documented on the
 [research page](https://arinaesp.github.io/axo-research.html).
 
 ### [Lead the Ship](https://arinaesp.github.io/leadtheship.html)
@@ -71,9 +72,9 @@ axo and the driving philosophy behind my software development.
 
 Each project is built on what it actually needs, not on one template:
 
-- **axo** — Cloudflare Worker (edge runtime) + D1 SQLite database. Handles auth, group-membership
-  verification against the Telegram Bot API, rate limiting, and static asset serving from a
-  single Worker. Vanilla JS on the client, which holds no secrets and makes no access decisions.
+- **axo** — Cloudflare Worker (edge runtime) + D1 SQLite database. Handles Telegram signature
+  verification, rate limiting, anonymous usage counts, and static asset serving from a single
+  Worker, with a switched-off access-code system kept behind one flag. Vanilla JS on the client, which holds no secrets and makes no access decisions.
 - **Lead the Ship** — Astro: content collections, JSON-LD structured data, self-hosted
   subsetted fonts, GitHub Actions deploy pipeline.
 - **WhisperFlow** — Python on top of faster-whisper, running entirely on-device.

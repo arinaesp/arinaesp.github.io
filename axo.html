@@ -19,7 +19,7 @@
 
   <section class="hero" style="text-align:center;">
     <img src="assets/axo-logo.png" alt="axo mascot" class="mascot-hero">
-    <div class="eyebrow" style="justify-content:center;">axo — telegram mini app</div>
+    <div class="eyebrow" style="justify-content:center;">axo — free in telegram and the browser</div>
     <h1 style="max-width:none; text-align:center; margin-left:auto; margin-right:auto;">
       English through <em style="color:var(--axo-orange-dark)">coding</em>
     </h1>
@@ -32,7 +32,8 @@
       it out — using action to anchor core vocabulary in memory.
     </p>
     <div class="cta-row" style="justify-content:center;">
-      <a href="https://axo.axocoder.workers.dev/" target="_blank" class="btn btn-primary">Try the app →</a>
+      <a href="https://play.axolab.space" target="_blank" class="btn btn-primary">Play in browser →</a>
+      <a href="https://t.me/axocoder_bot" target="_blank" class="btn btn-ghost">Play in Telegram</a>
       <a href="axo-research.html" class="btn btn-ghost">Read the research</a>
     </div>
   </section>
@@ -103,8 +104,8 @@
       axo runs on a Cloudflare Worker at the edge, backed by a D1 (SQLite) database. One
       Worker does both jobs: it handles the API routes and falls through to static asset
       serving for everything else — one deploy, one Worker, no separate API host to keep in
-      sync. Secrets (the Telegram bot token, the group ID, the admin token) live as Worker
-      secrets and never reach the browser.
+      sync. Secrets, the Telegram bot token among them, live as Worker secrets and never reach the
+      browser.
     </p>
     <p>
       The split matters: everything in <code>js/</code> runs in the child's browser and can
@@ -119,7 +120,7 @@
     <p>
       A Telegram Mini App hands the client an <code>initData</code> string. Trusting it as-is
       would mean anyone could forge a user, so the Worker verifies it cryptographically before
-      the app is allowed to boot.
+      acting on who the user is.
     </p>
     <div class="stats">
       <div class="stat">
@@ -136,18 +137,21 @@
       </div>
     </div>
     <p>
-      Past the signature, the Worker asks the Telegram Bot API whether the user is actually in
-      the axo group. That call <strong>never fails open</strong> — if Telegram is unreachable
-      the response is "verification unavailable," not "welcome in." Every rejection logs a
+      Past the signature, access has gone through two designs. The first asked the Telegram
+      Bot API on every login whether the user was in the axo group, so a bad hour at Telegram
+      locked every family out. The second answers from D1 alone: a single-use access code
+      creates an entitlement, and if the database is unreachable the Worker fails
+      <strong>closed</strong> — "verification unavailable," not "welcome in." Every rejection logs a
       one-word reason code for ops, while the client only ever sees a generic error, so failed
       attempts learn nothing about which check they tripped.
     </p>
     <p>
-      One deliberate exception to the strictness: if the database write recording a verified
-      user fails, the request still succeeds. Auth was already proven at that point, and a
-      storage hiccup shouldn't lock a family out of the app. The diagnostics endpoint
-      follows the same defensive default in the other direction — it reports itself disabled
-      until an admin token is configured, rather than sitting open.
+      Since 2026-09-24 axo is free, in Telegram and in any browser at
+      <a href="https://play.axolab.space" target="_blank">play.axolab.space</a>. The code system
+      stays built behind one <code>ACCESS_MODE</code> switch, and the switch fails toward free:
+      anything other than <code>"codes"</code>, including unset, means free, because free mode
+      stores nothing about the account — no Telegram ID, name or username. What the Worker
+      keeps instead is anonymous totals, such as new devices and lessons completed, with no IDs.
     </p>
   </section>
 
