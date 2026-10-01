@@ -83,6 +83,12 @@ img { max-width: 100%; display: block; }
 }
 .nav-links a { text-decoration: none; color: var(--ink-soft); }
 .nav-links a:hover { color: var(--ink); }
+.nav { flex-wrap: wrap; gap: 12px 26px; }
+.nav-links { flex-wrap: wrap; gap: 8px 26px; margin-left: auto; }
+.nav-social { display: flex; gap: 2px; }
+.nav-social a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 6px; color: var(--ink-soft); }
+.nav-social a:hover, .nav-social a:focus-visible { color: var(--red-pen); background: rgba(193, 68, 46, 0.08); }
+.nav-social svg { width: 18px; height: 18px; fill: currentColor; }
 
 /* ---------- EYEBROW / TERMINAL LABEL ---------- */
 .eyebrow {
@@ -363,6 +369,38 @@ body.axo-theme {
 }
 .founder-box img { width: 64px; border-radius: 50%; flex-shrink: 0; }
 
+/* ---------- ESSAYS + LINKS (index) ---------- */
+.essay-list, .link-list { list-style: none; margin: 0; padding: 0; }
+.essay-list li {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.essay-list li:last-child { border-bottom: 1px solid var(--line); }
+.essay-list time {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding-top: 4px;
+}
+.essay-list a { font-weight: 600; text-decoration: none; }
+.essay-list a:hover { color: var(--red-pen); }
+.essay-list p { margin: 4px 0 0; font-size: 15px; color: var(--ink-soft); line-height: 1.5; }
+.essay-also { font-size: 15px; color: var(--ink-soft); margin: 18px 0 0; }
+.essay-also a:hover { color: var(--red-pen); }
+
+.link-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 24px;
+}
+.link-list li { display: flex; flex-direction: column; padding: 10px 0; border-top: 1px solid var(--line); }
+.link-list a { font-family: var(--mono); font-size: 14px; font-weight: 700; text-decoration: none; }
+.link-list a:hover { color: var(--red-pen); }
+.link-list span { font-size: 14px; color: var(--ink-soft); }
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 640px) {
   .hero h1 { font-size: 32px; }
@@ -372,4 +410,6 @@ body.axo-theme {
   .stats { grid-template-columns: 1fr; }
   .loop-row, .loop-row--two { grid-template-columns: 1fr; }
   .founder-box { flex-direction: column; }
+  .essay-list li { grid-template-columns: 1fr; gap: 4px; }
+  .link-list { grid-template-columns: 1fr; }
 }
