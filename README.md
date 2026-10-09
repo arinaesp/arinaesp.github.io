@@ -16,13 +16,14 @@ app that implements the framework.
 
 ### [axo](https://arinaesp.github.io/axo.html) — [play in browser →](https://play.axolab.space) · [Telegram →](https://t.me/axocoder_bot) · [site →](https://axolab.space)
 
-A free game, in Telegram and in the browser, built on **English Through Logic** (above) — the methodology I developed fusing early coding logic with
-English language acquisition into a single learning loop, an approach with no found precedent
-in the products surveyed. axo works as an interactive bridge into English literacy for children,
-complementing rather than replacing formal instruction: kids see a word, type the code command,
-hear it spoken, and watch axo act it out. Grounded in Total Physical Response (TPR), a
-language-teaching principle developed by James Asher that pairs instruction with physical
-action. Runs on a Cloudflare Worker with a D1 database: server-side verification of Telegram
+A free game for children aged 5–9, in Telegram and in the browser, built on **English Through
+Logic** (above): English is what children learn, and the logic of a game is the route, an
+approach with no found precedent in the products surveyed. Kids hear and build a word, then
+type it as a code command and watch axo act it out. **All 40 lessons are live**, in four zones:
+sequences, arguments, loops and conditionals. axo complements formal instruction rather than
+replacing it, and eight books are in progress, a student activity book and a teacher's book for
+each zone, so teachers can run it in class. Its commands borrow the imperative from Total
+Physical Response (James Asher); the action happens on screen instead of in the body. Runs on a Cloudflare Worker with a D1 database: server-side verification of Telegram
 `initData` signatures, per-user rate limiting, anonymous usage totals with no IDs, and secrets
 that never reach the browser. A paid access-code system is built and switched off by one
 config flag while axo is free. Full market research and positioning documented on the
@@ -63,9 +64,10 @@ charts.
 
 Before transitioning into full-stack development, I spent years teaching English across every
 age group — adults, teenagers, and young learners. When I later began teaching children introductory
-coding alongside language, I noticed an immediate pattern: the two skills reinforced each other
-far more effectively together than apart. That core observation became the founding thesis behind
-axo and the driving philosophy behind my software development.
+coding, I noticed something I didn't plan for: after one lesson, two brothers raced in the yard
+shouting the commands they had typed, *move*, *turn right*, *attack*. The English had arrived as
+the way to make something happen. That observation became the founding idea behind axo, and a
+question I now want to measure properly.
 
 ## Stack
 
