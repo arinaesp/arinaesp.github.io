@@ -86,4 +86,4 @@ Each project is built on what it actually needs, not on one template:
 
 ## Contact
 
-[GitHub](https://github.com/arinaesp)
+[GitHub](https://github.com/arinaesp) · Comments, suggestions, or a story of what worked (and what flopped) with axo: [hello@axolab.space](mailto:hello@axolab.space)
