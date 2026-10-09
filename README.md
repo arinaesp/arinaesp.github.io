@@ -1,23 +1,22 @@
 # arinaesp.github.io
 
-Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the CT-DGBLL framework (formerly ILLA),
+Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the English Through Logic framework (formerly CT-DGBLL and ILLA),
 former TEFL/TESOL and IDP-certified instructor. Live at **[arinaesp.github.io](https://arinaesp.github.io)**.
 
 ## Research & Methodology
 
-### [CT-DGBLL (formerly ILLA)](https://arinaesp.github.io/methodology.html)
+### [English Through Logic](https://arinaesp.github.io/methodology.html)
 
-ILLA was the 2026 working name of the framework now called CT-DGBLL (Computational
-Thinking Digital Game-Based Language Learning): early English literacy and computational
-thinking, learned at the same time through commands that are English words and program
-instructions at once. Two conceptual papers are in preparation; **axo** (below) is the
+The framework behind axo, formerly CT-DGBLL and ILLA: children learn English as the
+language that runs a game, through commands that are English words and program
+instructions at once. A conceptual paper is in preparation; **axo** (below) is the
 app that implements the framework.
 
 ## Projects
 
 ### [axo](https://arinaesp.github.io/axo.html) — [play in browser →](https://play.axolab.space) · [Telegram →](https://t.me/axocoder_bot) · [site →](https://axolab.space)
 
-A free game, in Telegram and in the browser, built on **CT-DGBLL** (above) — the methodology I developed fusing early coding logic with
+A free game, in Telegram and in the browser, built on **English Through Logic** (above) — the methodology I developed fusing early coding logic with
 English language acquisition into a single learning loop, an approach with no found precedent
 in the products surveyed. axo works as an interactive bridge into English literacy for children,
 complementing rather than replacing formal instruction: kids see a word, type the code command,
