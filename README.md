@@ -1,13 +1,13 @@
 # arinaesp.github.io
 
-Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the English Through Logic framework (formerly CT-DGBLL and ILLA),
+Personal portfolio of **Arina Bolotbekova** — full-stack developer, author of the English Through Logic framework,
 former TEFL/TESOL and IDP-certified instructor. Live at **[arinaesp.github.io](https://arinaesp.github.io)**.
 
 ## Research & Methodology
 
 ### [English Through Logic](https://arinaesp.github.io/methodology.html)
 
-The framework behind axo, formerly CT-DGBLL and ILLA: children learn English as the
+The framework behind axo: children learn English as the
 language that runs a game, through commands that are English words and program
 instructions at once. A conceptual paper is in preparation; **axo** (below) is the
 app that implements the framework.
